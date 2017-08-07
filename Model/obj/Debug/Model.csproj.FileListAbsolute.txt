@@ -1,5 +1,0 @@
-c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Model\bin\Debug\Model.dll
-c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Model\bin\Debug\Model.pdb
-c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
-c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Model\obj\Debug\Model.dll
-c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Model\obj\Debug\Model.pdb
