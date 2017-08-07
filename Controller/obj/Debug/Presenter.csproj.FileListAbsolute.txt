@@ -1,0 +1,10 @@
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Controller.pdb
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Model.dll
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Model.pdb
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Tanks.pdb
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\obj\Debug\Presenter.csprojResolveAssemblyReference.cache
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\obj\Debug\Controller.pdb
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Tanks.dll
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Tanks.dll.config
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Controller.exe
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\obj\Debug\Controller.exe

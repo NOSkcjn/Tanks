@@ -1,0 +1,11 @@
+c:\users\nikita\documents\visual studio 2017\Projects\Tanks\Tanks\bin\Debug\Tanks.pdb
+c:\users\nikita\documents\visual studio 2017\Projects\Tanks\Tanks\obj\Debug\View.csprojResolveAssemblyReference.cache
+c:\users\nikita\documents\visual studio 2017\Projects\Tanks\Tanks\obj\Debug\View.csproj.GenerateResource.Cache
+c:\users\nikita\documents\visual studio 2017\Projects\Tanks\Tanks\obj\Debug\Tanks.pdb
+c:\users\nikita\documents\visual studio 2017\Projects\Tanks\Tanks\bin\Debug\Model.dll
+c:\users\nikita\documents\visual studio 2017\Projects\Tanks\Tanks\bin\Debug\Model.pdb
+c:\users\nikita\documents\visual studio 2017\Projects\Tanks\Tanks\obj\Debug\View.Properties.Resources.resources
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Tanks\obj\Debug\View.MainForm.resources
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Tanks\bin\Debug\Tanks.dll.config
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Tanks\bin\Debug\Tanks.dll
+C:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Tanks\obj\Debug\Tanks.dll

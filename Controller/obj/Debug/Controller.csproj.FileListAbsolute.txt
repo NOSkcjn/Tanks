@@ -1,0 +1,5 @@
+c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Controller.dll
+c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\bin\Debug\Controller.pdb
+c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\obj\Debug\Controller.csprojResolveAssemblyReference.cache
+c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\obj\Debug\Controller.dll
+c:\Users\Nikita\documents\visual studio 2017\Projects\Tanks\Controller\obj\Debug\Controller.pdb
