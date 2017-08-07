@@ -73,5 +73,29 @@ namespace Model
         {
             NewDirect = dir;
         }
+
+        public void TurnAround()
+        {
+            const int shiftKoef = 5;
+            switch(Direct)
+            {
+                case Direction.EAST:
+                    NewDirect = Direction.WEST;
+                    X -= shiftKoef;
+                    break;
+                case Direction.WEST:
+                    NewDirect = Direction.EAST;
+                    X += shiftKoef;
+                    break;
+                case Direction.NORTH:
+                    NewDirect = Direction.SOUTH;
+                    Y += shiftKoef;
+                    break;
+                case Direction.SOUTH:
+                    NewDirect = Direction.NORTH;
+                    Y -= shiftKoef;
+                    break;
+            }
+        }
     }
 }

@@ -20,11 +20,11 @@ namespace View
         {
             get
             {
-                return pictureBox1;
+                return pictureBoxGame;
             }
             set
             {
-                pictureBox1 = value;
+                pictureBoxGame = value;
             }
         }
 

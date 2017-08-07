@@ -12,12 +12,15 @@ namespace View
 {
     public class ViewGame
     {
+        private object objThread = new object();
+
         public ViewKolobok viewKolobok;
         List<ViewTank> viewTanksList = new List<ViewTank>();
         List<ViewApple> viewApplesList = new List<ViewApple>();
         List<ViewWall> viewWallList = new List<ViewWall>();
 
         private Bitmap _bitmap;
+        private Graphics graphic;
         private PictureBox gameMap;
         private List<GameObject> gameObjList;
 
@@ -29,6 +32,7 @@ namespace View
         {
             GameObjSize = gameObjSize;
             _bitmap = new Bitmap(map.Width, map.Height);
+            graphic = Graphics.FromImage(_bitmap);
             this.gameObjList = gameObjList;
             foreach (var obj in gameObjList)
             {
@@ -36,15 +40,15 @@ namespace View
                 {
                     viewKolobok = new ViewKolobok(obj);
                 }
-                else if(obj is Tank)
+                else if (obj is Tank)
                 {
                     viewTanksList.Add(new ViewTank(obj));
                 }
-                else if(obj is Apple)
+                else if (obj is Apple)
                 {
                     viewApplesList.Add(new ViewApple(obj));
                 }
-                else if(obj is Wall)
+                else if (obj is Wall)
                 {
                     viewWallList.Add(new ViewWall(obj));
                 }
@@ -54,29 +58,37 @@ namespace View
 
         private void ClearMap()
         {
-            Graphics gr = Graphics.FromImage(_bitmap);
-            gr.Clear(gameMap.BackColor);
+            graphic.Clear(gameMap.BackColor);
         }
 
         public void Refresh()
         {
-            lock (_bitmap)
+            lock (objThread)
             {
                 ClearMap();
-                viewKolobok.Draw(_bitmap);
+                viewKolobok.Draw(this);
                 foreach (var tank in viewTanksList)
                 {
-                    tank.Draw(_bitmap);
+                    tank.Draw(this);
                 }
                 foreach (var apple in viewApplesList)
                 {
-                    apple.Draw(_bitmap);
+                    apple.Draw(this);
                 }
                 foreach (var wall in viewWallList)
                 {
-                    wall.Draw(_bitmap);
+                    wall.Draw(this);
                 }
                 gameMap.Image = _bitmap;
+            }
+        }
+
+        public void SetDraw(Image image, int x, int y, int width, int height)
+        {
+            object obj = new object();
+            lock (obj)
+            {
+                graphic.DrawImage(image, x, y, width, height);
             }
         }
 

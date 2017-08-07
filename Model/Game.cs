@@ -27,6 +27,8 @@ namespace Model
 
         internal static int GameObjSize;
 
+        private object objThread = new object();
+
         public Game(int width, int height, int gameObjSize)
         {
             MAP_HEIGHT = height;
@@ -34,7 +36,7 @@ namespace Model
             GameObjSize = gameObjSize;
 
             //создаем колобка
-            kolobok = new Kolobok() { Direct = Direction.WEST, NewDirect = Direction.WEST };
+            kolobok = new Kolobok() { Direct = Direction.WEST, NewDirect = Direction.WEST, X = 200 };
             gameObjList.Add(kolobok);
 
             //создаем танки
@@ -55,18 +57,21 @@ namespace Model
             Update();
         }
 
-        public async void Update()
+        private async void Update()
         {
             while (!kolobok.dead)
             {
                 await Task.Delay(5);
-                kolobok.Move();
-                foreach(var obj in tanksList)
+                lock (objThread)
                 {
-                    obj.Move();
+                    kolobok.Move();
+                    foreach (var obj in tanksList)
+                    {
+                        obj.Move();
+                    }
+                    OnPosChanged?.Invoke();
+                    CheckCollides();
                 }
-                OnPosChanged?.Invoke();
-                CheckCollides();
             }
         }
 
@@ -99,6 +104,7 @@ namespace Model
                 {
                     if (obj.CheckObjectCollides(kolobok))
                     {
+                        kolobok.TurnAround();
                     }
                     else
                     {
@@ -106,7 +112,8 @@ namespace Model
                         {
                             if(obj.CheckObjectCollides(tank))
                             {
-
+                                tank.TurnAround();
+                                break;
                             }
                         }
                     }

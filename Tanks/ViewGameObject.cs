@@ -10,7 +10,7 @@ using View.Properties;
 
 namespace View
 {
-    public class ViewGameObject: View<GameObject>
+    public class ViewGameObject : View<GameObject>
     {
         protected PictureBox picture = new PictureBox();
 
@@ -46,14 +46,13 @@ namespace View
             this.Model = model;
         }
 
-        public void Draw(Bitmap bitmap)
+        public void Draw(ViewGame viewGame)
         {
-            Graphics graphic = Graphics.FromImage(bitmap);
-            if(!(Model is GameMovableObject))
-                graphic.DrawImage(Image, Model.X, Model.Y, PicWidth, PicHeight);
+            GameMovableObject obj = Model as GameMovableObject;
+            if (obj == null)
+                viewGame.SetDraw(Image, Model.X, Model.Y, PicWidth, PicHeight);
             else
             {
-                GameMovableObject obj = (GameMovableObject)Model;
                 if (obj.NewDirect != obj.Direct)
                 {
                     //двигался вверх или вниз и развернулся
@@ -69,7 +68,7 @@ namespace View
                         Image.RotateFlip(RotateFlipType.Rotate180FlipY);
                     }
                     //двигался вправо и начал двигаться вверх
-                    else if (obj.NewDirect == Direction.NORTH 
+                    else if (obj.NewDirect == Direction.NORTH
                         && (obj.Direct == Direction.EAST))
                     {
                         Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
@@ -118,8 +117,9 @@ namespace View
                     }
                     obj.Direct = obj.NewDirect;
                 }
-                graphic.DrawImage(Image, Model.X, Model.Y, PicWidth, PicHeight);
+                viewGame.SetDraw(Image, Model.X, Model.Y, PicWidth, PicHeight);
             }
+
         }
     }
 }
