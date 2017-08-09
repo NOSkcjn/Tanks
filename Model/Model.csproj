@@ -44,9 +44,11 @@
     <Compile Include="Direction.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameObjects\Apple.cs" />
+    <Compile Include="GameObjects\GameFiringObject.cs" />
     <Compile Include="GameObjects\GameMovableObject.cs" />
     <Compile Include="GameObjects\Kolobok.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\Shot.cs" />
     <Compile Include="GameObjects\Tank.cs" />
     <Compile Include="GameObjects\Wall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

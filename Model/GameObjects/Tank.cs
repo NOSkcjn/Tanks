@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Tank: GameMovableObject
+    public class Tank : GameFiringObject
     {
-        
+        public int Updates;
+
+        public Tank(): base()
+        {
+            Direct = Direction.NORTH;
+        }
+
+        public override string ToString()
+        {
+            return "Tank";
+        }
     }
 }

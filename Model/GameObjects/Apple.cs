@@ -8,6 +8,9 @@ namespace Model
 {
     public class Apple: GameObject
     {
-        
+        public override string ToString()
+        {
+            return "Apple";
+        }
     }
 }

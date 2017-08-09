@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C1A0DDF0-EC90-4CA6-8365-3E8943D800B4}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Controller</RootNamespace>
     <AssemblyName>Controller</AssemblyName>
@@ -45,18 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GamePresenter.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="PackmanController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{5dd4e0c9-e0a1-473e-a903-1d1853707773}</Project>
       <Name>Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tanks\View.csproj">
-      <Project>{37f881d9-7b42-43f4-9a21-cf532a606490}</Project>
-      <Name>View</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

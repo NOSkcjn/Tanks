@@ -8,5 +8,9 @@ namespace Model
 {
     public class Wall: GameObject
     {
+        public override string ToString()
+        {
+            return "Wall";
+        }
     }
 }

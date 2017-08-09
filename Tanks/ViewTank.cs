@@ -13,8 +13,8 @@ namespace View
     {
         public ViewTank(GameObject model): base(model, Resources.tank)
         {
-            PicWidth = ViewGame.GameObjSize-5;
-            PicHeight = ViewGame.GameObjSize+5;
+            //PicWidth = ViewGame.GameObjSize-5;
+            //PicHeight = ViewGame.GameObjSize+5;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,23 +13,22 @@ namespace View
 {
     public class ViewGame
     {
-        private object objThread = new object();
-
         public ViewKolobok viewKolobok;
         List<ViewTank> viewTanksList = new List<ViewTank>();
         List<ViewApple> viewApplesList = new List<ViewApple>();
         List<ViewWall> viewWallList = new List<ViewWall>();
+        List<ViewShot> viewShotsList = new List<ViewShot>();
 
         private Bitmap _bitmap;
         private Graphics graphic;
         private PictureBox gameMap;
-        private List<GameObject> gameObjList;
+        private BindingList<GameObject> gameObjList;
 
         internal static int GameObjSize;
 
         public event Action OnGameOverScreenShowed;
 
-        public ViewGame(PictureBox map, List<GameObject> gameObjList, int gameObjSize)
+        public ViewGame(PictureBox map, BindingList<GameObject> gameObjList, int gameObjSize)
         {
             GameObjSize = gameObjSize;
             _bitmap = new Bitmap(map.Width, map.Height);
@@ -63,33 +63,45 @@ namespace View
 
         public void Refresh()
         {
-            lock (objThread)
+            ClearMap();
+            viewKolobok.Draw(this);
+            foreach (var tank in viewTanksList)
             {
-                ClearMap();
-                viewKolobok.Draw(this);
-                foreach (var tank in viewTanksList)
-                {
-                    tank.Draw(this);
-                }
-                foreach (var apple in viewApplesList)
-                {
-                    apple.Draw(this);
-                }
-                foreach (var wall in viewWallList)
-                {
-                    wall.Draw(this);
-                }
-                gameMap.Image = _bitmap;
+                tank.Draw(this);
             }
+            foreach (var apple in viewApplesList)
+            {
+                apple.Draw(this);
+            }
+            foreach (var wall in viewWallList)
+            {
+                wall.Draw(this);
+            }
+            for(int i=0; i < viewShotsList.Count; i++)
+            {
+                bool exist = false;
+                foreach(var obj in gameObjList)
+                {
+                    if (obj == viewShotsList[i].Model)
+                    {
+                        viewShotsList[i].Draw(this);
+                        exist = true;
+                        break;
+                    }
+                }
+                if(!exist) viewShotsList.Remove(viewShotsList[i]);
+            }
+            gameMap.Image = _bitmap;
+        }
+
+        public void AddShot(ViewShot shot)
+        {
+            viewShotsList.Add(shot);
         }
 
         public void SetDraw(Image image, int x, int y, int width, int height)
         {
-            object obj = new object();
-            lock (obj)
-            {
-                graphic.DrawImage(image, x, y, width, height);
-            }
+            graphic.DrawImage(image, x, y, width, height);
         }
 
         public void GameOverScreen()

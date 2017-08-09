@@ -56,7 +56,7 @@ namespace View
                 if (obj.NewDirect != obj.Direct)
                 {
                     //двигался вверх или вниз и развернулся
-                    if ((obj.NewDirect == Direction.NORTH && obj.Direct == Direction.SOUTH) ||
+                     if ((obj.NewDirect == Direction.NORTH && obj.Direct == Direction.SOUTH) ||
                         (obj.NewDirect == Direction.SOUTH && obj.Direct == Direction.NORTH))
                     {
                         Image.RotateFlip(RotateFlipType.Rotate180FlipX);

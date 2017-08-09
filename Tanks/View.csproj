@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{37F881D9-7B42-43F4-9A21-CF532A606490}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>View</RootNamespace>
     <AssemblyName>Tanks</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -54,6 +54,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View.cs" />
     <Compile Include="ViewApple.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="ViewGameMovableObject.cs" />
     <Compile Include="ViewGameObject.cs" />
     <Compile Include="ViewKolobok.cs" />
+    <Compile Include="ViewShot.cs" />
     <Compile Include="ViewTank.cs" />
     <Compile Include="ViewWall.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -92,11 +94,16 @@
   <ItemGroup>
     <Content Include="Resources\apple.png" />
     <None Include="Resources\GAME_OVER.png" />
+    <None Include="Resources\bullet.png" />
     <Content Include="Resources\player.png" />
     <Content Include="Resources\tank.png" />
     <None Include="Resources\wall.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Controller\Presenter.csproj">
+      <Project>{c1a0ddf0-ec90-4ca6-8365-3e8943d800b4}</Project>
+      <Name>Presenter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{5dd4e0c9-e0a1-473e-a903-1d1853707773}</Project>
       <Name>Model</Name>
