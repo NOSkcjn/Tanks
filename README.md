@@ -2,5 +2,5 @@
 
 
 How to control:
-Up, Down, Left, Right - to move
-Space - to fire
+Up, Down, Left, Right - to move.
+Space - to fire.
