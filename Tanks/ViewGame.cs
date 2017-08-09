@@ -22,13 +22,13 @@ namespace View
         private Bitmap _bitmap;
         private Graphics graphic;
         private PictureBox gameMap;
-        private BindingList<GameObject> gameObjList;
+        private List<GameObject> gameObjList;
 
         internal static int GameObjSize;
 
         public event Action OnGameOverScreenShowed;
 
-        public ViewGame(PictureBox map, BindingList<GameObject> gameObjList, int gameObjSize)
+        public ViewGame(PictureBox map, List<GameObject> gameObjList, int gameObjSize)
         {
             GameObjSize = gameObjSize;
             _bitmap = new Bitmap(map.Width, map.Height);
@@ -55,6 +55,10 @@ namespace View
             }
             gameMap = map;
         }
+
+        public void SetMap()
+        { 
+}
 
         private void ClearMap()
         {

@@ -100,9 +100,9 @@
     <None Include="Resources\wall.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Controller\Presenter.csproj">
+    <ProjectReference Include="..\Controller\Controller.csproj">
       <Project>{c1a0ddf0-ec90-4ca6-8365-3e8943d800b4}</Project>
-      <Name>Presenter</Name>
+      <Name>Controller</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{5dd4e0c9-e0a1-473e-a903-1d1853707773}</Project>

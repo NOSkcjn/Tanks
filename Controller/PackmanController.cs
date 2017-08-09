@@ -13,8 +13,8 @@ namespace Presenter
 {
     public class PackmanController
     {
-        public const int MAP_WIDTH = 500;
-        public const int MAP_HEIGHT = 300;
+        public static int MAP_WIDTH;
+        public static int MAP_HEIGHT;
 
         public const int GAMEOBJ_SIZE = 35;
 
@@ -23,19 +23,22 @@ namespace Presenter
         public event Action OnRefresh;
         public event Action OnGameOver;
 
-        public BindingList<GameObject> GameObjList;
+        public List<GameObject> GameObjList;
 
         public Timer GameUpdateTimer;
 
-        public PackmanController(int interval = 3)
+        public PackmanController(int mapWidth, int mapHeight, int tanks, int apples, int interval)
         {
             GameUpdateTimer = new Timer();
             GameUpdateTimer.Interval = interval;
-            Game = new Game(MAP_WIDTH, MAP_HEIGHT, GAMEOBJ_SIZE);
+            Game.MAP_WIDTH = MAP_WIDTH = mapWidth;
+            Game.MAP_HEIGHT = MAP_HEIGHT = mapHeight;
+            Game = new Game(GAMEOBJ_SIZE, tanks, apples, interval);
             //mainForm.Start();
             //game.StartGame();
-            this.GameObjList = Game.gameObjList;
+            this.GameObjList = Game.GameObjList;
         }
+        
 
         public void Tick(object sender, EventArgs e)
         {
@@ -61,7 +64,7 @@ namespace Presenter
         private void Shoot(Shot shot)
         {
             Game.shotsList.Add(shot);
-            Game.gameObjList.Add(shot);
+            Game.GameObjList.Add(shot);
         }
 
         private void Refresh()

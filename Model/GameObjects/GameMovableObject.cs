@@ -8,8 +8,8 @@ namespace Model
 {
     public abstract class GameMovableObject : GameObject
     {
-        public Direction Direct = Direction.SOUTH;
-        public Direction NewDirect;
+        public Direction Direct = Direction.SOUTH; //текущее направление
+        public Direction NewDirect; //куда повернёт объект
 
         internal const int STEP = 1;
 

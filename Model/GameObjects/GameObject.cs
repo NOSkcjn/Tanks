@@ -14,6 +14,16 @@ namespace Model
 
         private int curID = 1;
 
+        protected Random random = new Random();
+
+        public string Name
+        {
+            get
+            {
+                return ToString();
+            }
+        }
+
         public int X
         {
             get;
@@ -24,16 +34,6 @@ namespace Model
         {
             get;
             set;
-        }
-
-        protected Random random = new Random();
-
-        public string Name
-        {
-            get
-            {
-                return ToString();
-            }
         }
 
         public GameObject()
@@ -62,7 +62,7 @@ namespace Model
             }
         }
 
-        public void SetRandomPos(BindingList<GameObject> allObjects)
+        public void SetRandomPos(List<GameObject> allObjects)
         {
             bool hurt = false;
             while (true)
@@ -71,7 +71,7 @@ namespace Model
                 Y = random.Next(Game.MAP_HEIGHT - Game.GameObjSize);
                 foreach (var obj in allObjects)
                 {
-                    if (CheckObjectCollides(obj, 100) && !(obj.Equals(this)))
+                    if (CheckObjectCollides(obj, 50) && !(obj.Equals(this)))
                     {
                         hurt = true;
                         break;

@@ -15,7 +15,7 @@ namespace Model
         List<Wall> wallsList = new List<Wall>();
         public List<Shot> shotsList = new List<Shot>();
 
-        public BindingList<GameObject> gameObjList = new BindingList<GameObject>();
+        public List<GameObject> GameObjList = new List<GameObject>();
 
         public delegate void Action();
 
@@ -28,42 +28,50 @@ namespace Model
         public static int MAP_WIDTH;
 
         internal static int GameObjSize;
+        private int delayTime;
 
-        private object objThread = new object();
+        Random random = new Random();
 
-        public Game(int width, int height, int gameObjSize)
+        public Game(int gameObjSize, int tanks, int apples, int interval)
         {
-            MAP_HEIGHT = height;
-            MAP_WIDTH = width;
+            /*MAP_HEIGHT = height;
+            MAP_WIDTH = width;*/
             GameObjSize = gameObjSize;
+            delayTime = interval;
 
             //создаем колобка
             kolobok = new Kolobok() { Direct = Direction.WEST, NewDirect = Direction.WEST, X = 200 };
-            gameObjList.Add(kolobok);
+            GameObjList.Add(kolobok);
 
             //создаем танки
-            tanksList.Add(new Tank() /*{ X = 55, Y = 29, Direct = Direction.NORTH }*/);
-            tanksList.Add(new Tank() /*{ X = 88, Y = 44, Direct = Direction.NORTH, NewDirect = Direction.SOUTH }*/);
-            foreach (var tank in tanksList)
+            for (int i = 0; i < tanks; i++)
             {
-                gameObjList.Add(tank);
+                tanksList.Add(new Tank());
             }
+            GameObjList.AddRange(tanksList);
 
             //создаем яблоки
-            applesList.Add(new Apple() { X = 100, Y = 100 });
-            applesList.Add(new Apple() { X = 200, Y = 120 });
-            foreach (var apple in applesList)
+            for (int i = 0; i < apples; i++)
             {
-                gameObjList.Add(apple);
+                applesList.Add(new Apple());
             }
+            GameObjList.AddRange(applesList);
 
             //создаем стены
-            wallsList.Add(new Wall() { X = 150, Y = 230 });
-            wallsList.Add(new Wall() { X = 150, Y = 260 });
-            foreach (var wall in wallsList)
-            {
-                gameObjList.Add(wall);
-            }
+            wallsList.Add(new Wall() { X = 158, Y = 50 });
+            wallsList.Add(new Wall() { X = 124, Y = 50 });
+            wallsList.Add(new Wall() { X = 90, Y = 50 });
+            wallsList.Add(new Wall() { X = 90, Y = 80 });
+            wallsList.Add(new Wall() { X = 90, Y = 110 });
+            wallsList.Add(new Wall() { X = 90, Y = 140 });
+            wallsList.Add(new Wall() { X = 90, Y = 170 });
+            wallsList.Add(new Wall() { X = 90, Y = 200 });
+            wallsList.Add(new Wall() { X = 290, Y = 60 });
+            wallsList.Add(new Wall() { X = 324, Y = 60 });
+            wallsList.Add(new Wall() { X = 358, Y = 60 });
+            wallsList.Add(new Wall() { X = 324, Y = 90 });
+            GameObjList.AddRange(wallsList);
+
             Shot.OnShotDelete += DeleteShot;
             //Update();
         }
@@ -95,16 +103,19 @@ namespace Model
 
                 //timeNext = timeNow + timeRate;
                 kolobok.Move();
-                Random rand = new Random();
+
                 foreach (var tank in tanksList)
                 {
                     tank.Updates++;
                     tank.Move();
-                    if (tank.Updates > 300 * (rand.Next(1, 5)))
+                    if (tank.Updates > delayTime * 100 * (random.Next(1, 5)))
                     {
-                        if (tank.CheckObjectCollides(kolobok, 200))
+                        if (random.Next(1, 3) == 2)
                         {
-                            tank.Shoot();
+                            if (tank.CheckObjectCollides(kolobok, 200))
+                            {
+                                tank.Shoot();
+                            }
                         }
                         else
                         {
@@ -127,7 +138,7 @@ namespace Model
             kolobok.dead = true;
             for (int i = 0; i < shotsList.Count; i++)
             {
-                gameObjList.Remove(shotsList[i]);
+                GameObjList.Remove(shotsList[i]);
             }
             shotsList.Clear();
             OnGameOver?.Invoke();
@@ -135,11 +146,11 @@ namespace Model
 
         public void CheckCollides()
         {
-            for (int i = 0; i < gameObjList.Count; i++)
+            for (int i = 0; i < GameObjList.Count; i++)
             {
-                if (gameObjList[i] is Tank)
+                if (GameObjList[i] is Tank)
                 {
-                    if (gameObjList[i].CheckObjectCollides(kolobok))
+                    if (GameObjList[i].CheckObjectCollides(kolobok))
                     {
                         GameOver();
                     }
@@ -147,26 +158,26 @@ namespace Model
                     {
                         foreach (var tank in tanksList)
                         {
-                            if (gameObjList[i].CheckObjectCollides(tank) && tank.ClashCheck((Tank)gameObjList[i]))
+                            if (GameObjList[i].CheckObjectCollides(tank) && tank.ClashCheck((Tank)GameObjList[i]))
                             {
                                 tank.TurnAround();
-                                ((Tank)gameObjList[i]).TurnAround();
+                                ((Tank)GameObjList[i]).TurnAround();
                                 break;
                             }
                         }
                     }
                 }
-                else if (gameObjList[i] is Apple)
+                else if (GameObjList[i] is Apple)
                 {
-                    if (gameObjList[i].CheckObjectCollides(kolobok))
+                    if (GameObjList[i].CheckObjectCollides(kolobok))
                     {
                         kolobok.Score++;
-                        gameObjList[i].SetRandomPos(gameObjList);
+                        GameObjList[i].SetRandomPos(GameObjList);
                     }
                 }
-                else if (gameObjList[i] is Wall)
+                else if (GameObjList[i] is Wall)
                 {
-                    if (gameObjList[i].CheckObjectCollides(kolobok))
+                    if (GameObjList[i].CheckObjectCollides(kolobok))
                     {
                         kolobok.TurnAround();
                     }
@@ -174,7 +185,7 @@ namespace Model
                     {
                         foreach (var tank in tanksList)
                         {
-                            if (gameObjList[i].CheckObjectCollides(tank))
+                            if (GameObjList[i].CheckObjectCollides(tank))
                             {
                                 tank.TurnAround();
                                 break;
@@ -182,14 +193,14 @@ namespace Model
                         }
                     }
                 }
-                else if (gameObjList[i] is Shot)
+                else if (GameObjList[i] is Shot)
                 {
-                    foreach (var objDestroyer in gameObjList)
+                    foreach (var objDestroyer in GameObjList)
                     {
-                        if (gameObjList[i].CheckObjectCollides(objDestroyer, 25) &&
+                        if (GameObjList[i].CheckObjectCollides(objDestroyer, 25) &&
                             !(objDestroyer is Shot) && !(objDestroyer is Apple))
                         {
-                            DeleteShot((Shot)gameObjList[i]);
+                            DeleteShot((Shot)GameObjList[i]);
                             //shotsList.Remove((Shot)gameObjList[i]);
                             //gameObjList[i] = null;
                             if (objDestroyer is Kolobok)
@@ -198,7 +209,7 @@ namespace Model
                             }
                             else if (objDestroyer is Tank)
                             {
-                                objDestroyer.SetRandomPos(gameObjList);
+                                objDestroyer.SetRandomPos(GameObjList);
                                 ((Tank)objDestroyer).SetRandomDirection();
                                 kolobok.Score++;
                             }
@@ -211,7 +222,7 @@ namespace Model
 
         public void DeleteShot(Shot shot)
         {
-            gameObjList.Remove(shot);
+            GameObjList.Remove(shot);
         }
 
         public void NewGame()
@@ -222,8 +233,12 @@ namespace Model
             kolobok.Y = 0;
             foreach (var tank in tanksList)
             {
-                tank.SetRandomPos(gameObjList);
+                tank.SetRandomPos(GameObjList);
                 tank.SetRandomDirection();
+            }
+            foreach (var apple in applesList)
+            {
+                apple.SetRandomPos(GameObjList);
             }
             //Update();
         }

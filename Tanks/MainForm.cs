@@ -22,8 +22,10 @@ namespace View
         ViewGame viewGame;
         PackmanController controller;
 
-        BindingList<GameObject> ViewObjectsList;
+        List<GameObject> ViewObjectsList;
         Timer updateListTimer;
+
+        bool initialValuesEntered = false;
 
         public PictureBox Map
         {
@@ -40,34 +42,6 @@ namespace View
         public MainForm()
         {
             InitializeComponent();
-
-            ViewObjectsList = new BindingList<GameObject>();
-            updateListTimer = new Timer();
-            updateListTimer.Interval = 1000;
-            updateListTimer.Tick += UpdateViewObjectsList;
-            updateListTimer.Start();
-
-            controller = new PackmanController();
-            Map.Height = PackmanController.MAP_HEIGHT;
-            Map.Width = PackmanController.MAP_WIDTH;
-            //game = controller.Game;
-            viewGame = new ViewGame(Map, controller.GameObjList, PackmanController.GAMEOBJ_SIZE);
-            dataGridView1.DataSource = ViewObjectsList;
-            controller.OnRefresh += viewGame.Refresh;
-            OnKeyControlDown += ((Kolobok)viewGame.viewKolobok.Model).SetDirection;
-            OnPlayerShoot += ((Kolobok)viewGame.viewKolobok.Model).Shoot;
-            //((Kolobok)viewGame.viewKolobok.Model).OnShooting += ShootView;
-            foreach (var obj in controller.GameObjList)
-            {
-                if (obj is GameFiringObject)
-                {
-                    ((GameFiringObject)obj).OnShooting += ShootView;
-                }
-            }
-            controller.OnGameOver += viewGame.GameOverScreen;
-            viewGame.OnGameOverScreenShowed += NewGameKeyShow;
-            OnNewGameKeyPressed += controller.NewGame;
-            ((Kolobok)viewGame.viewKolobok.Model).OnScoreChanged += ScoreChanged;
             //Application.Idle += Tick;
             //game.StartGame();
         }
@@ -79,11 +53,14 @@ namespace View
 
         public void UpdateViewObjectsList(object sender, EventArgs e)
         {
+            dataGridViewGameObjects.DataSource = null;
             ViewObjectsList.Clear();
-            foreach(var obj in controller.GameObjList)
+            foreach (var obj in controller.GameObjList)
             {
                 ViewObjectsList.Add(obj);
             }
+            dataGridViewGameObjects.DataSource = ViewObjectsList;
+            //dataGridView1.Refresh();
         }
 
         public void ScoreChanged()
@@ -129,9 +106,68 @@ namespace View
             buttonNewGame.Visible = true;
         }
 
+        private void ControlsShowHide(bool show)
+        {
+            labelWidth.Visible = show;
+            numericUpDownWidth.Visible = show;
+
+            labelHeight.Visible = show;
+            numericUpDownHeight.Visible = show;
+
+            labelTanks.Visible = show;
+            numericUpDownTanks.Visible = show;
+
+            labelApples.Visible = show;
+            numericUpDownApples.Visible = show;
+
+            labelSpeed.Visible = show;
+            numericUpDownDelay.Visible = show;
+        }
+
+        private void EnterInitialValues()
+        {
+            ViewObjectsList = new List<GameObject>();
+            updateListTimer = new Timer();
+            updateListTimer.Interval = 5000;
+            updateListTimer.Tick += UpdateViewObjectsList;
+            updateListTimer.Start();
+
+            Map.Width = (int)numericUpDownWidth.Value;
+            Map.Height = (int)numericUpDownHeight.Value;
+            //controller.SetMapSize(Map.Width, Map.Height);
+            //viewGame.SetMap(Map);
+
+            controller = new PackmanController(Map.Width, Map.Height,
+                (int)numericUpDownTanks.Value, (int)numericUpDownApples.Value, (int)numericUpDownDelay.Value);
+
+            viewGame = new ViewGame(Map, controller.GameObjList, PackmanController.GAMEOBJ_SIZE);
+            dataGridViewGameObjects.DataSource = ViewObjectsList;
+            controller.OnRefresh += viewGame.Refresh;
+            OnKeyControlDown += ((Kolobok)viewGame.viewKolobok.Model).SetDirection;
+            OnPlayerShoot += ((Kolobok)viewGame.viewKolobok.Model).Shoot;
+            //((Kolobok)viewGame.viewKolobok.Model).OnShooting += ShootView;
+            foreach (var obj in controller.GameObjList)
+            {
+                if (obj is GameFiringObject)
+                {
+                    ((GameFiringObject)obj).OnShooting += ShootView;
+                }
+            }
+            controller.OnGameOver += viewGame.GameOverScreen;
+            viewGame.OnGameOverScreenShowed += NewGameKeyShow;
+            OnNewGameKeyPressed += controller.NewGame;
+            ((Kolobok)viewGame.viewKolobok.Model).OnScoreChanged += ScoreChanged;
+        }
+
         private void buttonNewGame_Click(object sender, EventArgs e)
         {
             buttonNewGame.Visible = false;
+            if (!initialValuesEntered)
+            {
+                EnterInitialValues();
+                ControlsShowHide(false);
+                initialValuesEntered = true;
+            }
             this.Hide();
             this.Show();
             //Application.Idle += Tick;
